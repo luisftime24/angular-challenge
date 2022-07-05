@@ -48,7 +48,7 @@ export class PassengerFormComponent implements OnInit {
   }
 
   get lastNamesErrorsMsg() {
-    const errors = this.passengerForm.get('lastNames')?.errors
+    const errors = this.passengerForm.get('last_names')?.errors
     if (errors?.['required']) {
       return 'El apellido es requerido'
     } else if (errors?.['pattern']) {
