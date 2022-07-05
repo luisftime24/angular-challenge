@@ -18,7 +18,7 @@ export class FormValidatorsService {
     return (formGroup: AbstractControl) => {
       const type = formGroup.get(campoType)?.value;
       const numberDocument = formGroup.get(campoDocument)?.value;
-      const required = formGroup.get(campoDocument)?.errors?.['required'];
+      const required = formGroup.get(campoDocument)?.errors?.['required'] ? true : false;
 
       switch (type) {
         case '1':

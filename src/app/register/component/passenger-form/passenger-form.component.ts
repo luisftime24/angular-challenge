@@ -6,11 +6,27 @@ import { Country } from '../../interfaces/form.interface';
 
 @Component({
   selector: 'app-passenger-form',
-  templateUrl: './passenger-form.component.html'
+  templateUrl: './passenger-form.component.html',
+  styles: [
+    `
+      .form-control.ng-invalid.ng-touched {
+        border: 1px solid red;
+      }
+      .form-control.ng-valid.ng-touched {
+        border: 1px solid green;
+      }
+      .form-select.ng-invalid.ng-touched {
+        border: 1px solid red;
+      }
+      .form-select.ng-valid.ng-touched {
+        border: 1px solid green;
+      }
+    `
+  ]
 })
 export class PassengerFormComponent implements OnInit {
 
-  @Input() passengerForm : FormGroup = this.fb.group({});
+  @Input() passengerForm: FormGroup = this.fb.group({});
 
   documentTypes = [
     { value: '1', viewValue: 'Carnet de extranjeria' },
@@ -20,8 +36,8 @@ export class PassengerFormComponent implements OnInit {
 
   nationalities: Country[] = []
 
-  get nombresErrorsMsg() {
-    const errors = this.passengerForm.get('nombres')?.errors
+  get namesErrorsMsg() {
+    const errors = this.passengerForm.get('names')?.errors
     if (errors?.['required']) {
       return 'El nombre es requerido'
     } else if (errors?.['pattern']) {
@@ -31,8 +47,8 @@ export class PassengerFormComponent implements OnInit {
     return '';
   }
 
-  get apellidosErrorsMsg() {
-    const errors = this.passengerForm.get('apellidos')?.errors
+  get lastNamesErrorsMsg() {
+    const errors = this.passengerForm.get('lastNames')?.errors
     if (errors?.['required']) {
       return 'El apellido es requerido'
     } else if (errors?.['pattern']) {
@@ -42,8 +58,8 @@ export class PassengerFormComponent implements OnInit {
     return '';
   }
 
-  get numeroDocumentoErrorsMsg() {
-    const errors = this.passengerForm.get('numeroDocumento')?.errors
+  get documentErrorsMsg() {
+    const errors = this.passengerForm.get('document')?.errors
     if (errors?.['required']) {
       return 'El numero de documento es requerido'
     } else if (errors?.['pattern']) {
@@ -58,12 +74,12 @@ export class PassengerFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.countriesService.getCountries().subscribe((countries : Country[]) => {
+    this.countriesService.getCountries().subscribe((countries: Country[]) => {
       this.nationalities = countries;
     })
   }
 
-  invalidField(field: string) : boolean {
+  invalidField(field: string): boolean {
     return this.passengerForm.get(field)?.invalid
       && this.passengerForm.get(field)?.touched ? true : false
   }

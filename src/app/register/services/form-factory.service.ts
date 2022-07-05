@@ -20,6 +20,7 @@ export class FormFactoryService {
       document_type: ['', [Validators.required]],
       document: ['', [Validators.required]],
       nationality: ['', [Validators.required]],
+      edit_mode: true,
     }, {
       validators: [
         this.formValidators.documentValidator('document_type', 'document')
