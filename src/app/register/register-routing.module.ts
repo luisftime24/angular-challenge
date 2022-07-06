@@ -9,10 +9,6 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'confirm',
-    component: ConfirmComponent
-  },
-  {
     path: '**',
     redirectTo: 'passengers'
   }
