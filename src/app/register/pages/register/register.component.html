@@ -1,62 +1,86 @@
-<h2>Registro de pasajeros</h2>
-<hr />
+<div *ngIf="!confirmPage">
+  <h2>Registro de pasajeros</h2>
+  <hr />
 
-<div class="row">
-  <div class="col">
-    <form [formGroup]="registerForm" (ngSubmit)="register()">
-      <div class="row">
-        <label class="col-sm-3 form-label">Cantidad de pasajeros</label>
-        <div class="col-sm-9">
-          <div class="row">
-            <h4 class="col-sm-6 text-center">
-              {{ registerForm.controls["passengers"].value }}
-            </h4>
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="registerForm">
+        <div class="row">
+          <label class="col-sm-3 form-label">Cantidad de pasajeros</label>
+          <div class="col-sm-9">
+            <div class="row">
+              <h4 class="col-sm-6 text-center">
+                {{ registerForm.controls["passengers"].value }}
+              </h4>
+              <button
+                type="button"
+                class="col-sm-6 btn btn-primary"
+                (click)="addPassengerForm()"
+              >
+                Agregar pasajero
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+
+        <div
+          class="row form-container"
+          *ngFor="let passenger of passengersArray.controls; index as i"
+        >
+          <div class="mb-2 d-flex justify-content-between align-items-center">
+            <h5 class="">Pasajero {{ i + 1 }}</h5>
             <button
               type="button"
-              class="col-sm-6 btn btn-primary"
-              (click)="addPassengerForm()"
+              class="btn btn-outline-danger float-end"
+              (click)="removePassengerForm(i)"
+              *ngIf="passengersArray.controls.length > 1 && i > 0"
             >
-              Agregar pasajero
+              Eliminar
+            </button>
+          </div>
+          <app-passenger-form
+            [passengerForm]="$any(passenger)"
+          ></app-passenger-form>
+        </div>
+
+        <!-- Submit -->
+        <div class="row my-4">
+          <div class="col-sm-6"></div>
+          <div class="col-sm-6 d-grid">
+            <button class="btn btn-success" type="button" (click)="register()">
+              Registrar
             </button>
           </div>
         </div>
-      </div>
-
-      <hr />
-
-      <div
-        class="row form-container"
-        *ngFor="let passenger of passengersArray.controls; index as i"
-      >
-        <div class="mb-2 d-flex justify-content-between align-items-center">
-          <h5 class="">Pasajero {{ i + 1 }}</h5>
-          <button
-            type="button"
-            class="btn btn-outline-danger float-end"
-            (click)="removePassengerForm(i)"
-            *ngIf="passengersArray.controls.length > 1 && i > 0"
-          >
-            Eliminar
-          </button>
-        </div>
-        <app-passenger-form
-          [passengerForm]="$any(passenger)"
-        ></app-passenger-form>
-      </div>
-
-      <!-- Submit -->
-      <div class="row my-4">
-        <div class="col-sm-6"></div>
-        <div class="col-sm-6 d-grid">
-          <button class="btn btn-primary" type="submit">Registrar</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 
-<h4>Valid</h4>
-<pre>{{ registerForm.valid }}</pre>
+<div *ngIf="confirmPage">
+  <app-confirm
+    [passengersInfo]="$any(registerForm)"
+  ></app-confirm>
+  <div class="row my-4">
+    <div class="col-sm-6 d-grid">
+      <button class="btn btn-primary" type="button" (click)="back()">
+        Volver
+      </button>
+    </div>
+    <div class="col-sm-6 d-grid">
+      <button class="btn btn-success" type="button" (click)="confirmRegister()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
 
 <h4>Value</h4>
 <pre>{{ registerForm.value | json }}</pre>
+
+
+<h4>Cosas</h4>
+<pre>Pristine: {{ registerForm.pristine }}</pre>
+<pre>Pending: {{ registerForm.pending }}</pre>
+<pre>Dirty: {{ registerForm.dirty }}</pre>

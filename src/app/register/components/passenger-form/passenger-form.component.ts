@@ -10,16 +10,16 @@ import { Country } from '../../interfaces/form.interface';
   styles: [
     `
       .form-control.ng-invalid.ng-touched {
-        border: 1px solid red;
+        border: 2px solid red;
       }
       .form-control.ng-valid.ng-touched {
-        border: 1px solid green;
+        border: 2px solid green;
       }
       .form-select.ng-invalid.ng-touched {
-        border: 1px solid red;
+        border: 2px solid red;
       }
       .form-select.ng-valid.ng-touched {
-        border: 1px solid green;
+        border: 2px solid green;
       }
     `
   ]
@@ -60,10 +60,11 @@ export class PassengerFormComponent implements OnInit {
 
   get documentErrorsMsg() {
     const errors = this.passengerForm.get('document')?.errors
+    const pattern = this.passengerForm.get('document')?.errors?.['pattern']
     if (errors?.['required']) {
       return 'El numero de documento es requerido'
-    } else if (errors?.['pattern']) {
-      return 'El formato del numero de documento es incorrecto'
+    } else if (pattern) {
+      return pattern.errorMsg
     }
     return '';
   }

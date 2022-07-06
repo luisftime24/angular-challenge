@@ -26,21 +26,27 @@ export class FormValidatorsService {
             ? null
             : formGroup.get('document')?.setErrors({
               required: required,
-              pattern: { ceInvalid: true }
+              pattern: {
+                errorMsg: 'Carnet de extranjeria solo acepta caracteres alfanuméricos y una longitud máxima de 9 caracteres'
+              }
             });
         case '2':
           return this.dniRegex.test(numberDocument)
             ? null
             : formGroup.get('document')?.setErrors({
               required: required,
-              pattern: { dniInvalid: true }
+              pattern: {
+                errorMsg: 'DNI solo acepta caracteres numéricos y una longitud máxima de 8 caracteres'
+              }
             });;
         case '3':
           return this.passportRegex.test(numberDocument)
             ? null
             : formGroup.get('document')?.setErrors({
               required: required,
-              pattern: { pasaporteInvalid: true }
+              pattern: {
+                errorMsg: 'Pasaporte solo acepta caracteres numéricos y una longitud máxima de 9 caracteres'
+              }
             });
         default:
           return null;

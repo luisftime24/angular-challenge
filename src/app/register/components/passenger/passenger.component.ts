@@ -13,4 +13,17 @@ export class PassengerComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getDocumentType() {
+    const documentType = this.passengerInfo.get('document_type')?.value;
+    switch (documentType) {
+      case '1':
+        return 'Carnet de Extranjeria';
+      case '2':
+        return 'DNI';
+      case '3':
+        return 'Pasaporte';
+      default:
+        return 'No definido';
+    }
+  }
 }

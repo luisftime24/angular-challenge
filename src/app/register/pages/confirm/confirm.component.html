@@ -1,17 +1,46 @@
 <h2>Confirmar datos</h2>
 <hr />
 
-<div class="row passenger-container">
+<div
+  class="row passenger-container"
+  *ngFor="let passenger of passengersArray.controls; index as i"
+>
   <div class="mb-2 d-flex justify-content-between align-items-center">
-    <h5 class="">Pasajero</h5>
+    <h5 class="">Pasajero {{ i + 1 }}</h5>
     <div class="d-flex gap-2">
-      <button type="button" class="btn btn-outline-success">
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        (click)="editInfo(i)"
+        *ngIf="!isEditMode(passenger)"
+      >
         Editar
       </button>
-      <button type="button" class="btn btn-outline-danger">
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        (click)="saveInfo(i)"
+        *ngIf="isEditMode(passenger)"
+      >
+        Guardar
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        *ngIf="passengersArray.controls.length > 1"
+        (click)="deleteInfo(i)"
+      >
         Eliminar
       </button>
     </div>
   </div>
-  <app-passenger></app-passenger>
+  <hr />
+  <app-passenger
+    [passengerInfo]="$any(passenger)"
+    *ngIf="!isEditMode(passenger)"
+  ></app-passenger>
+  <app-passenger-form
+    [passengerForm]="$any(passenger)"
+    *ngIf="isEditMode(passenger)"
+  ></app-passenger-form>
 </div>

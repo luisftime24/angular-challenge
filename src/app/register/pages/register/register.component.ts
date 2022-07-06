@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { FormFactoryService } from '../../services/form-factory.service';
 
 @Component({
@@ -18,7 +18,9 @@ import { FormFactoryService } from '../../services/form-factory.service';
 })
 export class RegisterComponent implements OnInit {
 
-  registerForm : FormGroup = this.fb.group({});
+  registerForm: FormGroup = this.fb.group({});
+
+  confirmPage: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -26,11 +28,11 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group({
-      passengers: [1, Validators.required],
-      passengersArray: this.fb.array([])
-    });
+    this.initRegisterForm();
+  }
 
+  initRegisterForm() {
+    this.registerForm = this.formFactory.newRegisterForm();
     this.addPassengerForm();
   }
 
@@ -46,11 +48,12 @@ export class RegisterComponent implements OnInit {
 
     const passengerForms = this.formFactory.getPassengerForm();
     this.passengersArray.push(passengerForms);
+    this.actualPassengers();
   }
 
   removePassengerForm(index: number) {
     this.passengersArray.removeAt(index);
-    this.registerForm.get('passengers')?.setValue(this.passengersArray.length);
+    this.actualPassengers();
   }
 
   register() {
@@ -59,6 +62,35 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    console.log(this.registerForm.value);
+    this.confirmPage = true;
+    this.registerForm.markAsUntouched();
+    this.registerForm.markAsPristine();
+  }
+
+  confirmRegister() {
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    } else if (this.unsavedChanges()) {
+      alert('Hay cambios por guardar');
+      return;
+    }
+
+    this.initRegisterForm();
+    this.confirmPage = false;
+  }
+
+  back() {
+    this.confirmPage = false;
+    this.actualPassengers();
+    this.registerForm.markAsUntouched();
+  }
+
+  private actualPassengers() {
+    this.registerForm.get('passengers')?.setValue(this.passengersArray.length);
+  }
+
+  private unsavedChanges() {
+    return this.registerForm.dirty;
   }
 }
