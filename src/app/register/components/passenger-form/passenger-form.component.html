@@ -1,0 +1,122 @@
+<div class="row">
+  <div class="col">
+    <form [formGroup]="passengerForm">
+      <!-- Nombres -->
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Nombres</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Jhon"
+            formControlName="names"
+          />
+          <span class="form-text text-danger" *ngIf="invalidField('names')">
+            {{ namesErrorsMsg }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Apellidos -->
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Apellidos</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Doe"
+            formControlName="last_names"
+          />
+          <span
+            class="form-text text-danger"
+            *ngIf="invalidField('last_names')"
+          >
+            {{ lastNamesErrorsMsg }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Nacionalidad -->
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Nacionalidad</label>
+        <div class="col-sm-9">
+          <select class="form-select" formControlName="nationality">
+            <option selected value="">Seleccionar nacionalidad</option>
+            <option
+              *ngFor="let country of nationalities"
+              [value]="country.alpha3Code"
+            >
+              {{ country.name }}
+            </option>
+          </select>
+          <span
+            class="form-text text-danger"
+            *ngIf="invalidField('nationality')"
+          >
+            Debe de especificar una nacionalidad
+          </span>
+        </div>
+      </div>
+
+      <!-- Documento de identidad -->
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Tipo de documento</label>
+        <div class="col-sm-9">
+          <select class="form-select" formControlName="document_type">
+            <option selected value="">Seleccionar tipo de documento</option>
+            <option *ngFor="let tipo of documentTypes" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </option>
+          </select>
+          <span
+            class="form-text text-danger"
+            *ngIf="invalidField('document_type')"
+          >
+            Debe de especificar un tipo de documento
+          </span>
+        </div>
+      </div>
+
+      <!-- Número de documento -->
+
+      <!-- DNI o Pasaporte -->
+      <div
+        class="row mb-3"
+        *ngIf="
+          controlValue('document_type') === '2' ||
+          controlValue('document_type') === '3'
+        "
+      >
+        <label class="col-sm-3 col-form-label">Número de documento</label>
+        <div class="col-sm-9">
+          <input
+            type="number"
+            class="form-control"
+            formControlName="document"
+          />
+          <span class="form-text text-danger" *ngIf="invalidField('document')">
+            {{ documentErrorsMsg }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Carnet de extranjería -->
+      <div class="row mb-3" *ngIf="controlValue('document_type') === '1'">
+        <label class="col-sm-3 col-form-label">Número de documento</label>
+        <div class="col-sm-9">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="document"
+          />
+          <span
+            class="form-text text-danger"
+            *ngIf="invalidField('document')"
+          >
+            {{ documentErrorsMsg }}
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
