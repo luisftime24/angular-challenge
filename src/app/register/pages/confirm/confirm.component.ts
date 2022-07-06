@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
+import Swat from 'sweetalert2';
+
 @Component({
   selector: 'app-confirm',
   templateUrl: './confirm.component.html',
@@ -55,6 +57,19 @@ export class ConfirmComponent implements OnInit {
   }
 
   deleteInfo(id : number) {
-    this.passengersArray.removeAt(id);
+    Swat.fire({
+      title: 'Tekton Airlines',
+      text: '¿Está seguro de eliminar este pasajero?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2972fa',
+      cancelButtonColor: '#fb4143',
+      confirmButtonText: 'Si, eliminarlo!',
+      cancelButtonText: 'No, cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.passengersArray.removeAt(id);
+      }
+    })
   }
 }

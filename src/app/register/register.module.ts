@@ -9,6 +9,8 @@ import { PassengerComponent } from './components/passenger/passenger.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RegisterRoutingModule,
     ReactiveFormsModule,
-    SharedModule
-  ]
+    SharedModule,
+    SweetAlert2Module.forRoot()
+  ],
+  schemas: []
 })
 export class RegisterModule { }

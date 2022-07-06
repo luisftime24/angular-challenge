@@ -60,9 +60,7 @@
 </div>
 
 <div *ngIf="confirmPage">
-  <app-confirm
-    [passengersInfo]="$any(registerForm)"
-  ></app-confirm>
+  <app-confirm [passengersInfo]="$any(registerForm)"></app-confirm>
   <div class="row my-4">
     <div class="col-sm-6 d-grid">
       <button class="btn btn-primary" type="button" (click)="back()">
@@ -70,7 +68,13 @@
       </button>
     </div>
     <div class="col-sm-6 d-grid">
-      <button class="btn btn-success" type="button" (click)="confirmRegister()">Confirmar</button>
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="confirmRegister()"
+      >
+        Confirmar
+      </button>
     </div>
   </div>
 </div>
