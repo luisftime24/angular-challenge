@@ -13,34 +13,40 @@ export class FormValidatorsService {
 
   constructor() { }
 
-  documentValidator(campoType: string, campoDocument: string) {
+  documentValidator(fieldType: string, document: string) {
 
     return (formGroup: AbstractControl) => {
-      const type = formGroup.get(campoType)?.value;
-      const numberDocument = formGroup.get(campoDocument)?.value;
-      const required = formGroup.get(campoDocument)?.errors?.['required'] ? true : false;
+      const type = formGroup.get(fieldType)?.value;
+      const numberDocument = formGroup.get(document)?.value;
+      const required = formGroup.get(document)?.errors?.['required'] ? true : false;
 
       switch (type) {
         case '1':
           return this.ceRegex.test(numberDocument)
             ? null
-            : formGroup.get('numeroDocumento')?.setErrors({
+            : formGroup.get('document')?.setErrors({
               required: required,
-              pattern: { ceInvalid: true }
+              pattern: {
+                errorMsg: 'Carnet de extranjeria solo acepta caracteres alfanuméricos y una longitud máxima de 9 caracteres'
+              }
             });
         case '2':
           return this.dniRegex.test(numberDocument)
             ? null
-            : formGroup.get('numeroDocumento')?.setErrors({
+            : formGroup.get('document')?.setErrors({
               required: required,
-              pattern: { dniInvalid: true }
+              pattern: {
+                errorMsg: 'DNI solo acepta caracteres numéricos y una longitud máxima de 8 caracteres'
+              }
             });;
         case '3':
           return this.passportRegex.test(numberDocument)
             ? null
-            : formGroup.get('numeroDocumento')?.setErrors({
+            : formGroup.get('document')?.setErrors({
               required: required,
-              pattern: { pasaporteInvalid: true }
+              pattern: {
+                errorMsg: 'Pasaporte solo acepta caracteres numéricos y una longitud máxima de 9 caracteres'
+              }
             });
         default:
           return null;

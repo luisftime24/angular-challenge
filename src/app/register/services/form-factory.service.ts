@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 
 import { FormValidatorsService } from './form-validators.service';
 
@@ -7,6 +7,20 @@ import { FormValidatorsService } from './form-validators.service';
   providedIn: 'root'
 })
 export class FormFactoryService {
+
+  private initPassengerForm = {
+    "passengers": 1,
+    "passengersArray": [
+      {
+        "names": "",
+        "last_names": "",
+        "document_type": "",
+        "document": "",
+        "nationality": "",
+        "edit_mode": false
+      }
+    ]
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -20,7 +34,7 @@ export class FormFactoryService {
       document_type: ['', [Validators.required]],
       document: ['', [Validators.required]],
       nationality: ['', [Validators.required]],
-      edit_mode: true,
+      edit_mode: false
     }, {
       validators: [
         this.formValidators.documentValidator('document_type', 'document')
@@ -28,4 +42,14 @@ export class FormFactoryService {
     })
   }
 
+  newRegisterForm() {
+    return this.fb.group({
+      passengers: [1, Validators.required],
+      passengersArray: new FormArray([])
+    });
+  };
+
+  get passengerInitForm () {
+    return this.initPassengerForm;
+  }
 }
