@@ -14,7 +14,7 @@
         (click)="editInfo(i)"
         *ngIf="!isEditMode(passenger)"
       >
-        Editar
+        Editar <i class="bi bi-pencil-square"></i>
       </button>
       <button
         type="button"
@@ -22,7 +22,7 @@
         (click)="saveInfo(i)"
         *ngIf="isEditMode(passenger)"
       >
-        Guardar
+        Guardar <i class="bi bi-check2-square"></i>
       </button>
       <button
         type="button"
@@ -30,7 +30,7 @@
         *ngIf="passengersArray.controls.length > 1"
         (click)="deleteInfo(i)"
       >
-        Eliminar
+        Eliminar <i class="bi bi-x-square"></i>
       </button>
     </div>
   </div>
