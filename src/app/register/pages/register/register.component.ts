@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { FormFactoryService } from '../../services/form-factory.service';
 
+import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -42,7 +44,11 @@ export class RegisterComponent implements OnInit {
 
   addPassengerForm() {
     if (this.passengersArray.length == 4) {
-      alert('El número maximo de pasajeros es 4');
+      Swal.fire({
+        title: 'Tekton Airlines',
+        text: 'No se pueden agregar más de 4 pasajeros',
+        icon: 'warning'
+      })
       return;
     }
 
@@ -72,9 +78,25 @@ export class RegisterComponent implements OnInit {
       this.registerForm.markAllAsTouched();
       return;
     } else if (this.unsavedChanges()) {
-      alert('Hay cambios por guardar');
+      Swal.fire({
+        title: 'No es posible registrar',
+        text: 'Tiene cambios por guardar',
+        icon: 'warning'
+      })
       return;
     }
+
+    Swal.fire({
+      title: 'Registro exitoso',
+      text: 'Se ha registrado correctamente',
+      icon: 'success'
+    })
+
+    // Swal.fire({
+    //   title: 'Tekton Airlines',
+    //   text: 'Hubo un error al registrar',
+    //   icon: 'error'
+    // });
 
     this.initRegisterForm();
     this.confirmPage = false;

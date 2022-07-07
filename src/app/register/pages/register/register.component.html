@@ -14,7 +14,7 @@
               </h4>
               <button
                 type="button"
-                class="col-sm-6 btn btn-primary"
+                class="col-sm-6 btn btn-dark"
                 (click)="addPassengerForm()"
               >
                 Agregar pasajero
@@ -49,7 +49,7 @@
         <div class="row my-4">
           <div class="col-sm-6"></div>
           <div class="col-sm-6 d-grid">
-            <button class="btn btn-success" type="button" (click)="register()">
+            <button class="btn btn-primary" type="button" (click)="register()">
               Registrar
             </button>
           </div>
@@ -60,17 +60,21 @@
 </div>
 
 <div *ngIf="confirmPage">
-  <app-confirm
-    [passengersInfo]="$any(registerForm)"
-  ></app-confirm>
+  <app-confirm [passengersInfo]="$any(registerForm)"></app-confirm>
   <div class="row my-4">
     <div class="col-sm-6 d-grid">
-      <button class="btn btn-primary" type="button" (click)="back()">
+      <button class="btn btn-dark" type="button" (click)="back()">
         Volver
       </button>
     </div>
     <div class="col-sm-6 d-grid">
-      <button class="btn btn-success" type="button" (click)="confirmRegister()">Confirmar</button>
+      <button
+        class="btn btn-primary"
+        type="button"
+        (click)="confirmRegister()"
+      >
+        Confirmar
+      </button>
     </div>
   </div>
 </div>
